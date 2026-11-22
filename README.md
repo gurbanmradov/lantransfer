@@ -13,6 +13,8 @@ Transfer files, folders, photos, and links between **iOS, Android, Linux, Window
 ## Features
 
 - **Single QR Code, Both Directions:** Scan once with your phone camera to download files from your PC, upload multiple photos/files to your PC, and exchange text/links in real time.
+- **One-Click Desktop Shortcut (`--setup`):** Generates a native launcher on Linux (`.desktop`), Windows (`.bat` with drag-and-drop), and macOS (`.command`).
+- **Live Drag & Drop Sharing:** While a session is running, drag any file/folder into the terminal window (or type a link) and press Enter to push it live to your phone.
 - **Zero Mobile App Required:** Works directly in iOS Safari and Android Chrome with live upload progress bars.
 - **On-the-Fly Folder Archiving:** Share entire directories; `lantransfer` zips them automatically on demand and cleans up temporary archives on exit.
 - **Memory-Safe Streaming:** Transfers files in 64 KB chunks so large videos do not spike RAM usage.
@@ -24,26 +26,32 @@ Transfer files, folders, photos, and links between **iOS, Android, Linux, Window
 
 ---
 
-## Installation
+## Installation & Quick Setup
 
 ```bash
-git clone https://github.com/gurbanmradov/lantransfer.git
+git clone [https://github.com/gurbanmradov/lantransfer.git](https://github.com/gurbanmradov/lantransfer.git)
 cd lantransfer
 pip install .
+lantransfer --setup
 ```
+
+Running `lantransfer --setup` creates a clickable **LAN Transfer** shortcut for your OS:
+- **Linux:** Application menu entry (`~/.local/share/applications/lantransfer.desktop`) with *"Open With"* support.
+- **Windows:** Desktop shortcut (`LAN Transfer.bat`) — double-click to start or drag files directly onto the icon.
+- **macOS:** Desktop shortcut (`LAN Transfer.command`).
 
 ---
 
 ## Usage
 
-Start a bidirectional session (receive files/text from your phone):
+Start a bidirectional session (or just click the **LAN Transfer** shortcut):
 ```bash
 lantransfer
 ```
 
 Share specific files or folders from your PC while also accepting uploads:
 ```bash
-lantransfer report.pdf ./slides_folder --text "Meeting link: https://example.com"
+lantransfer report.pdf ./slides_folder --text "Meeting link: [https://example.com](https://example.com)"
 ```
 
 Customize destination directory or port:
@@ -54,6 +62,7 @@ lantransfer -d ~/Downloads/from-phone -p 9000
 | Flag | Description |
 |---|---|
 | `paths` | Optional files or folders to make downloadable from your phone |
+| `--setup` | Create a one-click desktop/menu shortcut for your OS and exit |
 | `-d, --dir` | Folder where uploaded files are saved (default: `./lantransfer_received`) |
 | `-p, --port` | Preferred port (default: `8765`, falls back to a free port if busy) |
 | `--host` | Manually override the auto-detected local IPv4 address |
