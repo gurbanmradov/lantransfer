@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lantransfer"
+version = "0.1.0"
+description = "Bidirectional, QR-code powered local network file and text transfer between phones and PCs."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+    "qrcode>=7.4",
+]
+
+[project.scripts]
+lantransfer = "lantransfer.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
