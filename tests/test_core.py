@@ -41,3 +41,26 @@ class TestSecurity(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestShortcuts(unittest.TestCase):
+    def test_create_linux_windows_and_macos_shortcuts(self):
+        from lantransfer.shortcuts import (
+            create_linux_desktop_entry,
+            create_macos_command_shortcut,
+            create_windows_bat_shortcut,
+        )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            linux_file = create_linux_desktop_entry(applications_dir=base)
+            self.assertTrue(linux_file.exists())
+            self.assertIn("Terminal=true", linux_file.read_text(encoding="utf-8"))
+
+            win_file = create_windows_bat_shortcut(desktop_dir=base)
+            self.assertTrue(win_file.exists())
+            self.assertIn("%*", win_file.read_text(encoding="utf-8"))
+
+            mac_file = create_macos_command_shortcut(desktop_dir=base)
+            self.assertTrue(mac_file.exists())
+            self.assertIn('"$@"', mac_file.read_text(encoding="utf-8"))
